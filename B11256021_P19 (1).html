@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="簡單的猜數字遊戲">
+    <title>猜數字遊戲</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        
+        h1 {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+        }
+        
+        .game-container {
+            margin-top: 20px;
+        }
+        
+        input[type="number"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #294baa;
+            color: white;
+            border: none;
+        }
+        
+        button:hover {
+            background-color: #1f3797;
+        }
+        
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        
+        .success {
+            color: green;
+        }
+        
+        .failure {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>猜數字遊戲</h1>
+
+    <div class="game-container">
+        <p>請猜一個介於 1 到 100 之間的數字。</p>
+        <input type="number" id="userInput" min="1" max="100" placeholder="猜個數字">
+        <button onclick="checkGuess()">提交猜測</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        let randomNumber = Math.floor(Math.random() * 100) + 1;
+        let attempts = 0;
+
+        function checkGuess() {
+            let userInput = document.getElementById("userInput").value;
+            let resultElement = document.getElementById("result");
+            if (!userInput) {
+                resultElement.textContent = "請輸入一個數字!";
+                resultElement.classList.remove('success', 'failure');
+                return;
+            }
+
+            userInput = Number(userInput);
+            attempts++;
+            if (userInput === randomNumber) {
+                resultElement.textContent = `恭喜你！你猜對了，答案是 ${randomNumber}。你總共猜了 ${attempts} 次。`;
+                resultElement.classList.add('success');
+                resultElement.classList.remove('failure');
+            } else if (userInput < randomNumber) {
+                resultElement.textContent = "太小，大一點數字！";
+                resultElement.classList.add('failure');
+                resultElement.classList.remove('success');
+            } else {
+                resultElement.textContent = "太大，小一點數字！";
+                resultElement.classList.add('failure');
+                resultElement.classList.remove('success');
+            }
+            document.getElementById("userInput").value = "";
+        }
+    </script>
+
+</body>
+
+</html>
